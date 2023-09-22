@@ -161,6 +161,30 @@
     (is (.contains m "A document that we should all marvel at"))
     (.delete f1)))
 
+(deftest test-content-transfer-encoding
+  (let [f1 (doto (java.io.File/createTempFile "_postal-" ".txt"))
+        _ (doto (java.io.PrintWriter. f1)
+            (.println "This will get base64 encoded.") (.close))
+        m (message->str
+           {:from "foo@bar.dom"
+            :to "baz@bar.dom"
+            :subject "Test"
+            :body [{:type "text/plain"
+                    :content-transfer-encoding "quoted-printable"
+                    :content "This is a line that is over 75 characters abcdefghijklmnopqrstuvwxyz 12334567890."}
+                   {:type :attachment
+                    :content-transfer-encoding "base64"
+                    :file-name "ImportantDocumentA.txt"
+                    :description "A document that we should all marvel at"
+                    :content f1}]})]
+    (is (.contains m "Content-Transfer-Encoding: quoted-printable"))
+    (is (.contains m "This is a line that is over 75 characters abcdefghijklmnopqrstuvwxyz 123345="))
+    (is (.contains m "Content-Transfer-Encoding: base64"))
+    (is (.contains m "VGhpcyB3aWxsIGdldCBiYXNlNjQgZW5jb2RlZC4K"))
+    (is (.contains m "ImportantDocumentA.txt"))
+    (is (.contains m "A document that we should all marvel at"))
+    (.delete f1)))
+
 (deftest test-attachment-with-unicode-name
   (let [f1 (doto (java.io.File/createTempFile "_postal-" ".txt"))
         _ (doto (java.io.PrintWriter. f1)

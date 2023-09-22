@@ -1,6 +1,6 @@
-(defproject com.draines/postal "3.0.0-SNAPSHOT"
+(defproject com.github.bookbub/postal "2.0.5.3-SNAPSHOT"
   :description "Clojure support for Internet email"
-  :url "https://github.com/drewr/postal"
+  :url "https://github.com/bookbub/postal"
   :license {:name "MIT"
             :url "http://en.wikipedia.org/wiki/MIT_License"
             :distribution :repo
