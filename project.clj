@@ -1,4 +1,4 @@
-(defproject com.github.bookbub/postal "2.0.5.3-SNAPSHOT"
+(defproject com.github.bookbub/postal "2.0.5.3"
   :description "Clojure support for Internet email"
   :url "https://github.com/bookbub/postal"
   :license {:name "MIT"
